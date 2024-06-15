@@ -34,10 +34,13 @@ jobs:
           POSTGRES_DB: simple-bank
         run: make start/dev arg=-d
 
+      - name: Containers
+        run: docker ps -a
+
       - name: Install golang-migrate
         run: |
           curl -L https://github.com/golang-migrate/migrate/releases/download/v4.17.1/migrate.linux-amd64.tar.gz | tar xvz
-          sudo mv migrate /usr/bin/
+          sudo mv migrate /usr/bin/migrate
           which migrate
 
       - name: Apply database migrations
