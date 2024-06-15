@@ -4,7 +4,7 @@
 
 start/dev: urls ## Start development environment
 	@echo "Starting development environment..."
-	@docker-compose $(DEV_COMPOSE) up --build $(arg)
+	@docker compose $(DEV_COMPOSE) up --build $(arg)
 .PHONY: start/dev
 
 #----
