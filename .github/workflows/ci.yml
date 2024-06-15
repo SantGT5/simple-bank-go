@@ -34,10 +34,11 @@ jobs:
           POSTGRES_DB: simple-bank
         run: make start/dev arg=-d
 
-        # @TODO: when backend docker container is set
-        # run `make migratup` before run backend container
-      - name: Wait for docker to finish building
-        run: sleep 10
+      - name: Install golang-migrate
+        run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.17.1/migrate.linux-amd64.tar.gz | tar xvz
+          sudo mv migrate /usr/bin/
+          which migrate
 
       - name: Apply database migrations
         run: make migratup
