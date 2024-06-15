@@ -1,35 +1,25 @@
-postgres:
-	docker run --name postgres16 -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres:16.2-alpine3.19
-.PHONY: postgres
+#----
+# Imports
+#----
 
-createdb:
-	docker exec -it postgres16 createdb --username=root --owner=root simple_bank
-.PHONY: createdb
+include $(wildcard task/*.mk)
 
-dropdb:
-	docker exec -it postgres16 dropdb simple_bank
-.PHONY: dropdb
+#----
+# Variables
+#----
 
-migratup:
-	migrate -path db/migration -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose up
-.PHONY: migratup
+PROJECT_NAME := simple-bank
+COMPOSE_PROJECT_NAME := --project-name $(PROJECT_NAME)
+COMMON_COMPOSE := -f docker/compose.yaml
 
-migratdown:
-	migrate -path db/migration -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose down
-.PHONY: migratdown
+DEV_COMPOSE := $(COMMON_COMPOSE) -f docker/compose.dev.yaml $(COMPOSE_PROJECT_NAME)
 
-sqlc:
-	sqlc generate
-.PHONY: sqlc
+#----
+# Info
+#----
 
-test:
-	go test -v -cover -count=1 ./...
-.PHONY: test
-
-test/cover:
-	go test -v -count=1 -race -coverprofile=coverage.out -covermode=atomic -p=1 ./...
-.PHONY: test/cover
-
-test/cover/html: test/cover
-	go tool cover -html=coverage.out -o coverage.html
-.PHONY: test/cover/html
+.PHONY: urls
+urls: ## Show the urls to the running applications
+	@echo "*------"
+	@echo "* Simple Bank [dev]"
+	@echo "*------\n"
