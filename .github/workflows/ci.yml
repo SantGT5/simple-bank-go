@@ -34,7 +34,7 @@ jobs:
           POSTGRES_DB: simple-bank
         run: make start/dev arg=-d
 
-      - name: Containers
+      - name: Containers List
         run: docker ps -a
 
       - name: Install golang-migrate
@@ -42,6 +42,10 @@ jobs:
           curl -L https://github.com/golang-migrate/migrate/releases/download/v4.17.1/migrate.linux-amd64.tar.gz | tar xvz
           sudo mv migrate /usr/bin/migrate
           which migrate
+
+      # @TODO: run magration in Backend container when its implemented
+      - name: Wait for docker to finish building
+        run: sleep 10
 
       - name: Apply database migrations
         run: make migratup
