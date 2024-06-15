@@ -26,6 +26,12 @@ jobs:
         run: go version
 
       - name: Start containers
+        env:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: simple-bank
         run: make start/dev arg=-d
 
       - name: Test
