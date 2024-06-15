@@ -34,6 +34,11 @@ jobs:
           POSTGRES_DB: simple-bank
         run: make start/dev arg=-d
 
+        # @TODO: when backend docker container is set
+        # run `make migratup` before run backend container
+      - name: Wait for docker to finish building
+        run: sleep 10
+
       - name: Apply database migrations
         run: make migratup
 
