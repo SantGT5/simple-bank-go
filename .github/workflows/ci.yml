@@ -27,18 +27,18 @@ jobs:
 
       - name: Start containers
         env:
-          POSTGRES_USER: admin
-          POSTGRES_PASSWORD: admin
-          POSTGRES_HOST: postgres
-          POSTGRES_PORT: 5432
-          POSTGRES_DB: simple-bank
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: make start/dev arg=-d
 
       # @TODO: run magration in Backend container when its implemented
       - name: Wait for docker to finish building
         run: sleep 10
 
-      - name: Containers List
+      - name: Running containers
         run: docker ps -a
 
       - name: Install golang-migrate
