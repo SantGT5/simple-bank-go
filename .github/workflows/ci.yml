@@ -37,11 +37,11 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: make start/dev arg=-d
 
-      - name: Sleep
-        run: sleep 10
-
       - name: Running containers
         run: docker ps -a
+
+      - name: backend logs
+        run: docker logs --since=1h backend
 
       - name: Backend test
         run: make test
