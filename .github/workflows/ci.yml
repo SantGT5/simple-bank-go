@@ -37,6 +37,9 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: make start/dev arg=-d
 
+      - name: Sleep
+        run: sleep 10
+
       - name: Running containers
         run: docker ps -a
 
