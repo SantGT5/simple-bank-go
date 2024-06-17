@@ -12,7 +12,7 @@ start/dev: urls ## Start development environment
 #----
 
 test: ## Run unit tests with coverage report
-	@docker exec -it backend go test -v -cover -count=1 ./...
+	@docker exec -i backend go test -v -cover -count=1 ./...
 .PHONY: test
 
 test/cover: ## Run unit tests with coverage report and race detection
