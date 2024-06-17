@@ -1,6 +1,20 @@
 version: "3.9"
 
 services:
+  backend:
+    container_name: backend
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - ${BACKEND_PORT}:8001
+    environment:
+      BACKEND_PORT: ${BACKEND_PORT}
+      POSTGRES_URL: ${POSTGRES_URL}
+    networks:
+      - simple_bank
+
   postgres:
     image: postgres:16.3-alpine
     container_name: postgres

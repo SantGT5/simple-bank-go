@@ -11,9 +11,9 @@ import (
 	_ "github.com/lib/pq"
 )
 
-const (
-	dbDriver = "postgres"
-	dbSource = "postgres://admin:admin@localhost:5432/simple-bank?sslmode=disable"
+var (
+	dbDriver    = "postgres"
+	dbSource    = os.Getenv("POSTGRES_URL") + "?sslmode=disable"
 	minCoverage = 0.8 // Minimum coverage here (e.g., 80%)
 )
 
@@ -31,7 +31,7 @@ func TestMain(m *testing.M) {
 	}
 
 	testQueries = db.New(testDB)
-	
+
 	// Run tests and check coverage
 	exitVal := m.Run()
 	cov := testing.Coverage()

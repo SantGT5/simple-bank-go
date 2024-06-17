@@ -12,13 +12,13 @@ start/dev: urls ## Start development environment
 #----
 
 test: ## Run unit tests with coverage report
-	@go test -v -cover -count=1 ./...
+	@docker exec -it backend go test -v -cover -count=1 ./...
 .PHONY: test
 
 test/cover: ## Run unit tests with coverage report and race detection
-	@go test -v -count=1 -race -coverprofile=coverage.out -covermode=atomic -p=1 ./...
+	@docker exec -it backend go test -v -count=1 -race -coverprofile=bin/coverage.out -covermode=atomic -p=1 ./...
 .PHONY: test/cover
 
 test/cover/html: test/cover ## Generate HTML coverage report
-	@go tool cover -html=coverage.out -o coverage.html
+	@docker exec -it backend go tool cover -html=bin/coverage.out -o bin/coverage.html
 .PHONY: test/cover/html
