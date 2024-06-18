@@ -7,5 +7,5 @@ migratdown: ## Revert database migrations (down)
 .PHONY: migratdown
 
 sqlc: ## Generate Go code from SQL files
-	@sqlc generate
+	@docker exec -it backend sqlc generate
 .PHONY: sqlc

@@ -4,7 +4,7 @@ services:
       context: ../
       dockerfile: docker/stack/backend/Dockerfile.dev
     volumes:
-      - ../:/app
+      - ../backend:/app
 
   adminer:
     image: adminer:latest

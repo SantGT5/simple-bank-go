@@ -23,7 +23,3 @@ urls: ## Show the urls to the running applications
 	@echo "* Simple Bank [dev]"
 	@echo "*------\n"
 .PHONY: urls
-
-server:
-	@go run  main.go
-.PHONY: server
