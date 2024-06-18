@@ -30,7 +30,7 @@ jobs:
         run: go version
 
       - name: Check code formatting
-        run: make check-format
+        run: make quality
 
       - name: Start Docker Containers
         env:
