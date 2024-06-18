@@ -14,18 +14,22 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4.1.7
 
-      - name: Setup Go environment
+      - name: Setup Go Environment
         uses: actions/setup-go@v5.0.1
         with:
-          go-version-file: "backend/go.mod"
+          go-version-file: backend/go.mod
+          cache: true
+          cache-dependency-path: |
+            backend/go.sum
+            backend/go.mod
 
-      - name: Go version
+      - name: Display Go Version
         run: go version
 
-      - name: Start containers
+      - name: Start Docker Containers
         env:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
@@ -37,8 +41,8 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: make start/dev arg=-d
 
-      - name: Running containers
+      - name: List Running Containers
         run: docker ps -a
 
-      - name: Backend test
+      - name: Run Backend Tests
         run: make test
