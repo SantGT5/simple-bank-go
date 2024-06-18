@@ -29,6 +29,9 @@ jobs:
       - name: Display Go Version
         run: go version
 
+      - name: Check code formatting
+        run: make check-format
+
       - name: Start Docker Containers
         env:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}

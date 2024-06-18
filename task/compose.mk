@@ -1,5 +1,5 @@
 #----
-# Docker
+# Compose
 #----
 
 start/dev: urls ## Start development environment
