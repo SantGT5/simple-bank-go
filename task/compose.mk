@@ -2,12 +2,16 @@
 # Compose
 #----
 
-start/dev: urls ## Start development environment
-	@docker compose $(DEV_COMPOSE) up --build $(arg)
+define EXE_COMPOSE
+    @docker compose $(COMMON_COMPOSE) $(1) $(COMPOSE_PROJECT_NAME) up --build
+endef
+
+start/dev: urls ## Start dev environment
+	$(call EXE_COMPOSE, $(DEV_COMPOSE)) $(arg)
 .PHONY: start/dev
 
-start/ci: urls ## Start development environment
-	@docker compose $(CI_COMPOSE) up --build $(arg)
+start/ci: urls ## Start ci environment
+	$(call EXE_COMPOSE, $(CI_COMPOSE)) $(arg)
 .PHONY: start/ci
 
 #----
@@ -15,7 +19,7 @@ start/ci: urls ## Start development environment
 #----
 
 test: ## Run unit tests with coverage report
-	@docker exec -t backend go test -v -cover -count=1 ./...
+	@docker exec -t backend go test -v -count=1 -cover ./...
 .PHONY: test
 
 test/cover: ## Run unit tests with coverage report and race detection

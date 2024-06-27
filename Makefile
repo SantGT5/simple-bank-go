@@ -10,10 +10,10 @@ include $(wildcard task/*.mk)
 
 PROJECT_NAME := simple-bank
 COMPOSE_PROJECT_NAME := --project-name $(PROJECT_NAME)
-COMMON_COMPOSE := -f docker/compose.yaml
 
-DEV_COMPOSE := $(COMMON_COMPOSE) -f docker/compose.dev.yaml $(COMPOSE_PROJECT_NAME)
-CI_COMPOSE := $(COMMON_COMPOSE) -f docker/compose.ci.yaml $(COMPOSE_PROJECT_NAME)
+COMMON_COMPOSE := -f docker/compose.yaml
+DEV_COMPOSE := -f docker/compose.dev.yaml
+CI_COMPOSE := -f docker/compose.ci.yaml
 
 #----
 # Info
@@ -21,7 +21,10 @@ CI_COMPOSE := $(COMMON_COMPOSE) -f docker/compose.ci.yaml $(COMPOSE_PROJECT_NAME
 
 urls: ## Show the urls to the running applications
 	@echo "*------"
-	@echo "* Simple Bank [dev]"
+	@echo "* Simple Bank"
+	@echo "*"
+	@echo "* Backend: http://localhost:8001"
+	@echo "*"
 	@echo "*------\n"
 .PHONY: urls
 
