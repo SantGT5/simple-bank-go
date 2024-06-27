@@ -6,6 +6,10 @@ start/dev: urls ## Start development environment
 	@docker compose $(DEV_COMPOSE) up --build $(arg)
 .PHONY: start/dev
 
+start/ci: urls ## Start development environment
+	@docker compose $(CI_COMPOSE) up --build $(arg)
+.PHONY: start/ci
+
 #----
 # Backend test
 #----

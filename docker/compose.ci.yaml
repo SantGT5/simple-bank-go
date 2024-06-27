@@ -1,0 +1,7 @@
+services:
+  backend:
+    build:
+      context: ../
+      dockerfile: docker/stack/backend/Dockerfile.ci
+    volumes:
+      - ../backend:/app
