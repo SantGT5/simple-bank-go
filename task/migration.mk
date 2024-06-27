@@ -1,7 +1,12 @@
+# Define a macro with parameters using call
+define DB_MIGRATE
+    @docker exec -it backend /bin/sh -c 'migrate -path db/migration -database "$$POSTGRES_URL?sslmode=disable" -verbose $(1)'
+endef
+
 migratup: ## Apply database migrations (up)
-	@docker exec -it backend /bin/sh -c 'migrate -path db/migration -database "$$POSTGRES_URL?sslmode=disable" -verbose up'
+	$(call DB_MIGRATE, up)
 .PHONY: migratup
 
 migratdown: ## Revert database migrations (down)
-	@docker exec -it backend /bin/sh -c 'migrate -path db/migration -database "$$POSTGRES_URL?sslmode=disable" -verbose down'
+	$(call DB_MIGRATE, down)
 .PHONY: migratdown

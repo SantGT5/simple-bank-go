@@ -5,8 +5,8 @@ ENV CGO_ENABLED=1
 
 # Install tools
 RUN go install go.uber.org/mock/mockgen@v0.4.0 && \
+    go install github.com/air-verse/air@v1.52.3 && \
     go install github.com/sqlc-dev/sqlc/cmd/sqlc@v1.26.0 && \
-    go install github.com/githubnemo/CompileDaemon@v1.4.0 && \
     go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@v4.17.1
 
 WORKDIR /app
@@ -23,4 +23,4 @@ ENTRYPOINT [ "entrypoint.sh" ]
 
 EXPOSE 8001
 
-CMD CompileDaemon -log-prefix=false -build="go build -o bin/simple_bank main.go" -command="bin/simple_bank"
+CMD air --build.cmd "go build -o tmp/simple_bank main.go" --build.bin "tmp/simple_bank" --build.exclude_dir "tmp,test"
