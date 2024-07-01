@@ -1,0 +1,27 @@
+# Development environment configuration
+{
+	log {
+		level ERROR
+	}
+}
+
+localhost {
+	vars {
+		BACKEND_PORT {env.BACKEND_PORT}
+		ADMINER_PORT {env.ADMINER_PORT}
+	}
+
+	handle /backend/* {
+		uri strip_prefix /backend
+		reverse_proxy backend:{vars.BACKEND_PORT}
+	}
+
+	handle /adminer* {
+		reverse_proxy adminer:{vars.ADMINER_PORT}
+	}
+
+	# Default handler: If no other handlers match, return a "Not Found" error.
+	handle {
+		respond "Not Found" 404
+	}
+}

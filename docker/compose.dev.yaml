@@ -10,11 +10,17 @@ services:
     image: adminer:latest
     container_name: adminer
     restart: unless-stopped
-    ports:
-      - ${ADMINER_PORT}:8080
     depends_on:
       - postgres
     environment:
       ADMINER_DESIGN: "nette" # themes: https://github.com/vrana/adminer/tree/master/plugins
     networks:
       - simple_bank
+
+  caddy:
+    volumes:
+      - ./caddy/dev/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      ADMINER_PORT: ${ADMINER_PORT}

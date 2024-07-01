@@ -7,8 +7,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    ports:
-      - ${BACKEND_PORT}:8001
     environment:
       BACKEND_PORT: ${BACKEND_PORT}
       POSTGRES_URL: ${POSTGRES_URL}
@@ -21,8 +19,6 @@ services:
     restart: always
     volumes:
       - postgres:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
     healthcheck:
       test:
         [
@@ -46,8 +42,23 @@ services:
     networks:
       - simple_bank
 
+  caddy:
+    image: caddy:2.8.4-alpine
+    container_name: caddy
+    depends_on:
+      - backend
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      BACKEND_PORT: ${BACKEND_PORT}
+    networks:
+      - simple_bank
+
 volumes:
   postgres:
+  caddy_data:
+  caddy_config:
 
 networks:
   simple_bank:
