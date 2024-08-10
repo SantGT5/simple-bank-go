@@ -1,4 +1,4 @@
-package database
+package db
 
 import (
 	"context"
@@ -6,15 +6,14 @@ import (
 	"testing"
 	"time"
 
-	db "github.com/SantGT5/simple-bank-go/db/sqlc"
 	"github.com/SantGT5/simple-bank-go/util"
 	"github.com/stretchr/testify/require"
 )
 
-func createRandomAccount(t *testing.T) db.Account {
+func createRandomAccount(t *testing.T) Account {
 	user := createRandomUser(t)
 
-	arg := db.CreateAccountParams{
+	arg := CreateAccountParams{
 		Owner:    user.Username,
 		Balance:  util.RandomMoney(),
 		Currency: util.RandomCurrency(),
@@ -59,7 +58,7 @@ func TestGetAccount(t *testing.T) {
 func TestUpdateAccount(t *testing.T) {
 	account1 := createRandomAccount(t)
 
-	arg := db.UpdateAccountParams{
+	arg := UpdateAccountParams{
 		ID:      account1.ID,
 		Balance: util.RandomMoney(),
 	}
@@ -96,7 +95,7 @@ func TestListAccount(t *testing.T) {
 		createRandomAccount(t)
 	}
 
-	arg := db.ListAccountsParams{
+	arg := ListAccountsParams{
 		Limit:  5,
 		Offset: 5,
 	}

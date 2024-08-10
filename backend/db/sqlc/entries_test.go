@@ -1,18 +1,17 @@
-package database
+package db
 
 import (
 	"context"
 	"testing"
 	"time"
 
-	db "github.com/SantGT5/simple-bank-go/db/sqlc"
 	"github.com/SantGT5/simple-bank-go/util"
 	"github.com/stretchr/testify/require"
 )
 
-func createRandomEntry(t *testing.T, account db.Account) db.Entry {
+func createRandomEntry(t *testing.T, account Account) Entry {
 
-	arg := db.CreateEntryParams{
+	arg := CreateEntryParams{
 		AccountID: account.ID,
 		Amount:    util.RandomMoney(),
 	}
@@ -60,7 +59,7 @@ func TestListEntries(t *testing.T) {
 		createRandomEntry(t, account)
 	}
 
-	arg := db.ListEntriesParams{
+	arg := ListEntriesParams{
 		AccountID: account.ID,
 		Limit:     5,
 		Offset:    5,

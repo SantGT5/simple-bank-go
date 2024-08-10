@@ -1,19 +1,22 @@
-package database
+package db
 
 import (
 	"context"
 	"testing"
 	"time"
 
-	db "github.com/SantGT5/simple-bank-go/db/sqlc"
 	"github.com/SantGT5/simple-bank-go/util"
 	"github.com/stretchr/testify/require"
 )
 
-func createRandomUser(t *testing.T) db.User {
-	arg := db.CreateUserParams{
+func createRandomUser(t *testing.T) User {
+	hashed, err := util.HashPassword(util.RandomString(6))
+
+	require.NoError(t, err)
+
+	arg := CreateUserParams{
 		Username:       util.RandomOwner(),
-		HashedPassword: "secrete",
+		HashedPassword: hashed,
 		FullName:       util.RandomOwner(),
 		Email:          util.RandomEmail(),
 	}

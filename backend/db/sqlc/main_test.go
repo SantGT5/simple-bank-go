@@ -1,4 +1,4 @@
-package database
+package db
 
 import (
 	"database/sql"
@@ -7,7 +7,6 @@ import (
 	"os"
 	"testing"
 
-	db "github.com/SantGT5/simple-bank-go/db/sqlc"
 	_ "github.com/lib/pq"
 )
 
@@ -17,7 +16,7 @@ var (
 	minCoverage = 0.8 // Minimum coverage here (e.g., 80%)
 )
 
-var testQueries *db.Queries
+var testQueries *Queries
 
 var testDB *sql.DB
 
@@ -30,7 +29,7 @@ func TestMain(m *testing.M) {
 		log.Fatal("cannot connect to db: ", err)
 	}
 
-	testQueries = db.New(testDB)
+	testQueries = New(testDB)
 
 	// Run tests and check coverage
 	exitVal := m.Run()
