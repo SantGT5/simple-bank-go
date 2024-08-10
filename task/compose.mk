@@ -2,16 +2,16 @@
 # Compose
 #----
 
-define EXE_COMPOSE
+define RUN_COMPOSE
     @docker compose $(COMMON_COMPOSE) $(1) $(COMPOSE_PROJECT_NAME) up --build
 endef
 
 start/dev: urls ## Start dev environment
-	$(call EXE_COMPOSE, $(DEV_COMPOSE)) $(arg)
+	$(call RUN_COMPOSE, $(DEV_COMPOSE)) $(arg)
 .PHONY: start/dev
 
 start/ci: urls ## Start ci environment
-	$(call EXE_COMPOSE, $(CI_COMPOSE)) $(arg)
+	$(call RUN_COMPOSE, $(CI_COMPOSE)) $(arg)
 .PHONY: start/ci
 
 #----

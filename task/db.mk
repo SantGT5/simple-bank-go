@@ -14,6 +14,12 @@ define DB_MIGRATE
     @docker exec -it backend /bin/sh -c 'migrate -path db/migration -database "$$POSTGRES_URL?sslmode=disable" -verbose $(1)'
 endef
 
+migrate-version: ## New version (make migrate-version name=version_name)
+	$(call check_defined, name, migration name)
+
+	@docker exec -it backend /bin/sh -c 'migrate create -ext sql -dir db/migration -seq $(name)'
+.PHONY: migrate-up
+
 migrate-up: ## Apply database migrations (up)
 	$(call DB_MIGRATE, up)
 .PHONY: migrate-up

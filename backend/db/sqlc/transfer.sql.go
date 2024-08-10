@@ -10,10 +10,10 @@ import (
 )
 
 const createTransfer = `-- name: CreateTransfer :one
-INSERT INTO
-    transfers (from_account_id, to_account_id, amount)
-VALUES
-    ($1, $2, $3) RETURNING id, from_account_id, to_account_id, amount, created_at
+INSERT INTO transfers(from_account_id, to_account_id, amount)
+    VALUES ($1, $2, $3)
+RETURNING
+    id, from_account_id, to_account_id, amount, created_at
 `
 
 type CreateTransferParams struct {
@@ -42,8 +42,7 @@ FROM
     transfers
 WHERE
     id = $1
-LIMIT
-    1
+LIMIT 1
 `
 
 func (q *Queries) GetTransfer(ctx context.Context, id int64) (Transfer, error) {
@@ -69,8 +68,7 @@ WHERE
     OR to_account_id = $2
 ORDER BY
     id
-LIMIT
-    $3 OFFSET $4
+LIMIT $3 OFFSET $4
 `
 
 type ListTransfersParams struct {
